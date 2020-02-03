@@ -4,6 +4,5 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-mbed-tools-ci = {path = ".",editable = true}
 tox = ">=3.3.0"
 mbed-tools-ci-scripts = {editable = true,path = "."}
