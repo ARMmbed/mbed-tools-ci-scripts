@@ -16,31 +16,37 @@ stages:
               python.version: '3.6'
               vmImageName: ubuntu-18.04
               uploadCoverage: "false"
+              tox.env: "py36"
 
             Linux_Py_3_7:
               python.version: '3.7'
               vmImageName: ubuntu-18.04
               uploadCoverage: "true"
+              tox.env: "py37"
 
             Windows_Py_3_6:
               python.version: '3.6'
               vmImageName: windows-2019
               uploadCoverage: "false"
+              tox.env: "py36"
 
             Windows_Py_3_7:
               python.version: '3.7'
               vmImageName: windows-2019
               uploadCoverage: "false"
+              tox.env: "py37"
 
             macOS_Py_3_6:
               python.version: '3.6'
               vmImageName: macOS-10.14
               uploadCoverage: "false"
+              tox.env: "py36"
 
             macOS_Py_3_7:
               python.version: '3.7'
               vmImageName: macOS-10.14
               uploadCoverage: "false"
+              tox.env: "py37"
         pool:
           vmImage: $(vmImageName)
 
@@ -53,16 +59,16 @@ stages:
           - template: steps/install-development-dependencies.yml
 
           - script: |
-              flake8
+              tox -e linting
             displayName: 'Static Analysis - general (flake8)'
 
           - script: |
-              mypy -p mbed_tools_ci_scripts
+              tox -e typing
             displayName: 'Static Analysis - type checks (mypy)'
 
           - script: |
-              pytest
-            displayName: 'Run unit tests (pytest)'
+              tox -e $(tox.env)
+            displayName: 'Run unit tests (tox -e $(tox.env))'
 
           - script: |
               curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
