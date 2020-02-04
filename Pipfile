@@ -4,12 +4,5 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-flake8 = "*"
-flake8-docstrings = "*"
-mypy = ">=0.500"
-pytest = "*"
-mbed-tools-ci-scripts = {path = ".",editable = true}
-pyfakefs = "*"
-pytest-cov = "*"
-coverage = "*"
-wheel = "*"
+tox = ">=3.3.0"
+mbed-tools-ci-scripts = {editable = true,path = "."}
