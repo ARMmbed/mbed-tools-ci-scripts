@@ -21,7 +21,24 @@ class TestFindNewsFiles(TestCase):
         news_dir = "news/"
         root_dir = "/root/"
 
-        subject = find_news_files(git=fake_git_wrapper, root_dir=root_dir, news_dir=news_dir)
+        subject = find_news_files(git=fake_git_wrapper, root_dir=root_dir, news_dir=news_dir, uncommitted=False)
+
+        self.assertEqual(
+            subject, [str(pathlib.Path(root_dir, "news/1234.txt")), str(pathlib.Path(root_dir, "news/wat.html"))]
+        )
+
+    def test_returns_uncommitted_news_files_as_str(self):
+        """Given added files in git, it returns absolute paths to added news files."""
+        fake_git_wrapper = mock.Mock(spec_set=GitWrapper)
+        fake_git_wrapper.uncommitted_changes_as_str.return_value = [
+            "foo/bar.py",
+            "news/1234.txt",
+            "news/wat.html",
+        ]
+        news_dir = "news/"
+        root_dir = "/root/"
+
+        subject = find_news_files(git=fake_git_wrapper, root_dir=root_dir, news_dir=news_dir, uncommitted=True)
 
         self.assertEqual(
             subject, [str(pathlib.Path(root_dir, "news/1234.txt")), str(pathlib.Path(root_dir, "news/wat.html"))]
@@ -35,7 +52,9 @@ class TestValidateNewsFiles(TestCase):
         news_dir = "some/path"
 
         with self.assertRaises(FileNotFoundError) as cm:
-            validate_news_files(git=mock.Mock(spec_set=GitWrapper), root_dir="/does-not-matter/", news_dir=news_dir)
+            validate_news_files(
+                git=mock.Mock(spec_set=GitWrapper), root_dir="/does-not-matter/", news_dir=news_dir, uncommitted=False
+            )
 
         expected_error_message = f"PR must contain a news file in {news_dir}. See README.md."
         self.assertEqual(str(cm.exception), expected_error_message)
@@ -48,7 +67,9 @@ class TestValidateNewsFiles(TestCase):
         news_dir = "some/dir"
         root_dir = "/does-not-matter"
 
-        validate_news_files(git=git_wrapper, root_dir=root_dir, news_dir=news_dir)
+        validate_news_files(git=git_wrapper, root_dir=root_dir, news_dir=news_dir, uncommitted=False)
 
-        find_news_files.assert_called_once_with(git=git_wrapper, root_dir=root_dir, news_dir=news_dir)
+        find_news_files.assert_called_once_with(
+            git=git_wrapper, root_dir=root_dir, news_dir=news_dir, uncommitted=False
+        )
         validate_news_file.assert_called_with("a")

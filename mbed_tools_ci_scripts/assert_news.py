@@ -59,33 +59,35 @@ def validate_news_file(absolute_path: Union[pathlib.Path, str]) -> None:
     NewsFileValidator(absolute_path).validate()
 
 
-def find_news_files(git: GitWrapper, root_dir: str, news_dir: str) -> List[str]:
+def find_news_files(git: GitWrapper, root_dir: str, news_dir: str, uncommitted: bool) -> List[str]:
     """Determines a list of all the news files which were added as part of the PR.
 
     Args:
         git: Instance of GitWrapper.
         root_dir: Root directory of the project.
         news_dir: Relative path to news directory.
+        uncommitted: Include uncommitted files.
 
     Returns:
         list: list of absolute paths to news files
     """
-    files_changed = git.list_files_added_on_current_branch()
+    files_changed = git.list_files_added_on_current_branch() if not uncommitted else git.uncommitted_changes_as_str()
     # Relies on the fact GitWrapper returns paths that are always relative
     # to the project root.
     added_news_files = [file_path for file_path in files_changed if file_path.startswith(news_dir)]
     return [str(pathlib.Path(root_dir, file_path)) for file_path in added_news_files]
 
 
-def validate_news_files(git: GitWrapper, root_dir: str, news_dir: str) -> None:
+def validate_news_files(git: GitWrapper, root_dir: str, news_dir: str, uncommitted: bool) -> None:
     """Checks that news files exist and pass validation checks.
 
     Args:
         git: Instance of GitWrapper.
         root_dir: Root directory of the project.
         news_dir: Relative path to news directory.
+        uncommitted: Include uncommitted files.
     """
-    added_news_files = find_news_files(git=git, news_dir=news_dir, root_dir=root_dir,)
+    added_news_files = find_news_files(git=git, news_dir=news_dir, root_dir=root_dir, uncommitted=uncommitted,)
     if not added_news_files:
         raise FileNotFoundError(f"PR must contain a news file in {news_dir}. See README.md.")
     for absolute_file_path in added_news_files:
@@ -97,6 +99,9 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Check correctly formatted news files exist on feature branch.")
     parser.add_argument("-b", "--current-branch", help="Name of the current branch", nargs="?")
     parser.add_argument("-l", "--local", action="store_true", help="perform checks directly on local repository")
+    parser.add_argument(
+        "-u", "--uncommitted", action="store_true", help="include uncommitted files, supported only with -l"
+    )
     parser.add_argument(
         "-v", "--verbose", action="count", default=0, help="Verbosity, by default errors are reported.",
     )
@@ -112,9 +117,10 @@ def main() -> None:
             root_dir = configuration.get_value(ConfigurationVariable.PROJECT_ROOT)
             absolute_news_dir = configuration.get_value(ConfigurationVariable.NEWS_DIR)
             news_dir = str(pathlib.Path(absolute_news_dir).relative_to(root_dir))
+            include_uncommitted = True if args.local and args.uncommitted else False
             try:
                 validate_news_files(
-                    git=git, news_dir=news_dir, root_dir=root_dir,
+                    git=git, news_dir=news_dir, root_dir=root_dir, uncommitted=include_uncommitted,
                 )
             except Exception as e:
                 log_exception(logger, e)

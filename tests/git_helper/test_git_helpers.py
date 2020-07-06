@@ -20,6 +20,7 @@ class TestGitWrapper(TestCase):
         self.assertTrue("." in version)
         self.assertTrue(git.get_commit_count() > 0)
         self.assertIsNotNone(git.uncommitted_changes)
+        self.assertIsNotNone(git.uncommitted_changes_as_str())
         self.assertIsNotNone(git.get_remote_url())
 
 
@@ -61,10 +62,13 @@ class TestGitTempClone(TestCase):
             self.assertTrue(len(clone.list_files_added_on_current_branch()) == 0)
             previous_hash = clone.get_commit_hash()
             previous_count = clone.get_commit_count()
-            test_file = Path(clone.root).joinpath(f"branch-test-{uuid4()}.txt")
+            file_name = f"branch-test-{uuid4()}.txt"
+            test_file = Path(clone.root).joinpath(file_name)
             test_file.touch()
             uncommitted_changes = clone.uncommitted_changes
             self.assertTrue(test_file in uncommitted_changes)
+            uncommitted_changes_as_str = clone.uncommitted_changes_as_str()
+            self.assertTrue(file_name in uncommitted_changes_as_str)
             clone.add(test_file)
             clone.commit("Test commit")
             self.assertNotEqual(previous_hash, clone.get_commit_hash())
@@ -75,7 +79,8 @@ class TestGitTempClone(TestCase):
     def test_file_addition_with_paths_to_initial_repository(self):
         """Test basic git add on the clone."""
         git = ProjectGitWrapper()
-        test_file = Path(git.root).joinpath(f"a_test_file-{uuid4()}.txt")
+        file_name = f"a_test_file-{uuid4()}.txt"
+        test_file = Path(git.root).joinpath(file_name)
         test_file.touch()
         with GitTempClone(repository_to_clone=git, desired_branch_name="master") as clone:
             test_file.unlink()
@@ -83,6 +88,8 @@ class TestGitTempClone(TestCase):
             clone.checkout(branch)
             uncommitted_changes = clone.uncommitted_changes
             self.assertTrue(clone.get_corresponding_path(test_file) in uncommitted_changes)
+            uncommitted_changes_as_str = clone.uncommitted_changes_as_str()
+            self.assertTrue(file_name in uncommitted_changes_as_str)
             clone.add(test_file)
             clone.commit("Test commit")
             added_files = [Path(git.root).joinpath(f) for f in clone.list_files_added_on_current_branch()]

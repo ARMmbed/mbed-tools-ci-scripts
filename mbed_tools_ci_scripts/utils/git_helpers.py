@@ -526,6 +526,18 @@ class GitWrapper:
         is_release = self.is_release_branch(current_branch)
         return not (is_master or is_beta or is_release)
 
+    def uncommitted_changes_as_str(self) -> List[str]:
+        """Gets list of uncommitted files.
+
+        Returns:
+             list of uncommitted
+        """
+        status = self.repo.git.status(porcelain=True, untracked_files=True)
+        if not status:
+            return []
+
+        return [line.strip().split(" ")[-1] for line in status.splitlines()]
+
     @property
     def uncommitted_changes(self) -> List[Path]:
         """Gets list of uncommitted files.

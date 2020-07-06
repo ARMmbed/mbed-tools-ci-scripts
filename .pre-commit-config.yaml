@@ -2,7 +2,7 @@
   hooks:
     - id: assertnews
       name: news file
-      entry: assert-news -l
+      entry: assert-news -l -u
       language: python
       types: [file]
       require_serial: true
