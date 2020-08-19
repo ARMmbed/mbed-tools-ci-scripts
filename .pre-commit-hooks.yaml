@@ -1,0 +1,8 @@
+- id: licensing
+  name: Add license headers to source files
+  description: This script adds license headers to source files in the repository
+  entry: license-files
+  language: python
+  pass_filenames: false
+  require_serial: true
+  always_run: true
