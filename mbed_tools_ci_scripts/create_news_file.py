@@ -15,8 +15,6 @@ import sys
 from datetime import datetime
 
 from mbed_tools_ci_scripts.utils.configuration import configuration, ConfigurationVariable
-from mbed_tools_ci_scripts.assert_news import validate_news_file
-from mbed_tools_ci_scripts.utils.logging import log_exception
 
 logger = logging.getLogger(__name__)
 
@@ -71,14 +69,7 @@ def main() -> int:
     parser.add_argument("--type", help="News type to create.", choices=[t.name for t in NewsType], default="feature")
 
     args = parser.parse_args()
-    created_file = create_news_file(args.news_text, NewsType[args.type])
-
-    try:
-        validate_news_file(created_file)
-    except ValueError as e:
-        created_file.unlink()
-        log_exception(logger, e)
-        return 1
+    create_news_file(args.news_text, NewsType[args.type])
 
     return 0
 

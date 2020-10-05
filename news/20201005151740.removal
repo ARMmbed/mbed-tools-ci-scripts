@@ -1,0 +1,1 @@
+Remove assert-news, use towncrier.check instead.

@@ -39,7 +39,6 @@ setup(
     description="Continuous Integration scripts used by Mbed tools Python packages",
     entry_points={
         "console_scripts": [
-            f"assert-news={SOURCE_DIR}.assert_news:main",
             f"generate-news={SOURCE_DIR}.generate_news:main",
             f"create-news-file={SOURCE_DIR}.create_news_file:main",
             f"generate-docs={SOURCE_DIR}.generate_docs:main",
