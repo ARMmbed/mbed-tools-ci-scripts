@@ -57,7 +57,11 @@ class SpdxPackage:
     See https://spdx.org/spdx-specification-21-web-version#h.4i7ojhp
     """
 
-    def __init__(self, package_info: PackageInfo, is_dependency: bool = False,) -> None:
+    def __init__(
+        self,
+        package_info: PackageInfo,
+        is_dependency: bool = False,
+    ) -> None:
         """Constructor."""
         self._is_dependency = is_dependency
         self._package_info = package_info

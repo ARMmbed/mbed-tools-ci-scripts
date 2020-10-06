@@ -236,7 +236,12 @@ class SpdxDocument:
         doc.creation_info.add_creator(Tool(self.tool_name))
         doc.creation_info.set_created_now()
         if not self._is_dependency:
-            review = Review(Person(determine_spdx_value(self.reviewer), determine_spdx_value(self.reviewer_email),))
+            review = Review(
+                Person(
+                    determine_spdx_value(self.reviewer),
+                    determine_spdx_value(self.reviewer_email),
+                )
+            )
             review.set_review_date_now()
             doc.add_review(review)
 

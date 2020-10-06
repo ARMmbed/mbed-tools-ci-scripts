@@ -107,7 +107,9 @@ class SpdxProject:
             checksum = SpdxProject.generate_tag_value_file(dir, spdx_dependency, file_name)
             externalRefs.append(
                 DependencySpdxDocumentRef(
-                    name=spdx_dependency.document_name, namespace=spdx_dependency.document_namespace, checksum=checksum,
+                    name=spdx_dependency.document_name,
+                    namespace=spdx_dependency.document_namespace,
+                    checksum=checksum,
                 )
             )
         self.main_document.external_refs = externalRefs

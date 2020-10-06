@@ -63,7 +63,11 @@ def main() -> int:
     )
 
     parser.add_argument(
-        "-v", "--verbose", action="count", default=0, help="Verbosity, by default errors are reported.",
+        "-v",
+        "--verbose",
+        action="count",
+        default=0,
+        help="Verbosity, by default errors are reported.",
     )
     args = parser.parse_args()
     set_log_level(args.verbose)

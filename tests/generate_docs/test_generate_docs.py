@@ -21,7 +21,8 @@ class TestGenerateDocs(TestCase):
         with Patcher() as patcher:
             fake_output_dir = pathlib.Path("local_docs")
             patcher.fs.create_file(
-                str(fake_output_dir.joinpath("some_docs_file.html")), contents="This is some old documentation.",
+                str(fake_output_dir.joinpath("some_docs_file.html")),
+                contents="This is some old documentation.",
             )
             self.assertTrue(fake_output_dir.is_dir())
 

@@ -36,7 +36,11 @@ def generate_file_based_on_template(
     if suffix:
         filename = Path(
             "{0}_{2}{1}".format(
-                *(str(filename.name), str(filename.suffix), str(suffix.replace(".", "_").replace("-", "_")),)
+                *(
+                    str(filename.name),
+                    str(filename.suffix),
+                    str(suffix.replace(".", "_").replace("-", "_")),
+                )
             )
         )
     output_filename = output_dir.joinpath(filename)
