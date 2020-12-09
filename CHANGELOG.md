@@ -11,6 +11,27 @@ beta releases are not included in this history. For a full list of all releases,
 
 [//]: # (begin_release_notes)
 
+"1.7.5" (2020-12-09)
+====================
+
+Bugfixes
+--------
+
+- Pin version of broken licenseheaders dependency. (#07122020)
+
+
+Deprecations and Removals
+-------------------------
+
+- Remove assert-news, use towncrier.check instead. (#20201005151740)
+
+
+Misc
+----
+
+- #20200819153150
+
+
 "1.7.4" (2020-07-08)
 ====================
 

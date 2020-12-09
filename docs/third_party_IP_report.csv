@@ -15,7 +15,7 @@ True,docutils,True,http://docutils.sourceforge.net/,Python-2.0,Licence is compli
 True,gitdb,True,https://github.com/gitpython-developers/gitdb,0BSD,Licence is compliant.
 True,GitPython,True,https://github.com/gitpython-developers/GitPython,Unknown,Package's licence manually checked: BSD-3-Clause
 True,idna,True,https://github.com/kjd/idna,0BSD,Licence is compliant.
-True,importlib-metadata,True,http://importlib-metadata.readthedocs.io/,Apache-2.0,Licence is compliant.
+True,importlib-metadata,True,https://github.com/python/importlib_metadata,Unknown,Package's licence manually checked: Apache-2.0
 True,incremental,True,https://github.com/twisted/incremental,MIT,Licence is compliant.
 True,isodate,True,https://github.com/gweis/isodate/,0BSD,Licence is compliant.
 True,jeepney,True,https://gitlab.com/takluyver/jeepney,Unknown,Package's licence manually checked: MIT
@@ -29,7 +29,7 @@ True,Mako,True,https://www.makotemplates.org/,MIT,Licence is compliant.
 True,Markdown,True,https://Python-Markdown.github.io/,0BSD,Licence is compliant.
 True,MarkupSafe,True,https://palletsprojects.com/p/markupsafe/,BSD-3-Clause,Licence is compliant.
 True,mbed-tools-ci-scripts,False,https://github.com/ARMmbed/mbed-tools-ci-scripts,Apache-2.0,Licence is compliant.
-True,packaging,True,https://github.com/pypa/packaging,Apache-2.0 OR BSD-2-Clause,Licence is compliant.
+True,packaging,True,https://github.com/pypa/packaging,Unknown,Package's licence manually checked: Apache-2.0
 True,pdoc3,True,https://pdoc3.github.io/pdoc/,AGPL-3.0,Package's licence manually checked: Accepted for this project since not distributed
 True,pkginfo,True,https://code.launchpad.net/~tseaver/pkginfo/trunk,MIT,Licence is compliant.
 True,ply,True,http://www.dabeaz.com/ply/,0BSD,Licence is compliant.
@@ -42,7 +42,7 @@ True,python-dotenv,True,https://github.com/theskumar/python-dotenv,Unknown,Packa
 True,PyYAML,True,https://github.com/yaml/pyyaml,MIT,Licence is compliant.
 True,rdflib,True,https://github.com/RDFLib/rdflib,BSD-3-Clause,Licence is compliant.
 True,readme-renderer,True,https://github.com/pypa/readme_renderer,Apache-2.0,Licence is compliant.
-True,regex,True,https://bitbucket.org/mrabarnett/mrab-regex,Python-2.0,Licence is compliant.
+True,regex,True,https://bitbucket.org/mrabarnett/mrab-regex,Apache-2.0,Licence is compliant.
 True,requests,True,https://requests.readthedocs.io,Apache-2.0,Licence is compliant.
 True,requests-toolbelt,True,https://toolbelt.readthedocs.org,Apache-2.0,Licence is compliant.
 True,rfc3986,True,http://rfc3986.readthedocs.io,Apache-2.0,Licence is compliant.
